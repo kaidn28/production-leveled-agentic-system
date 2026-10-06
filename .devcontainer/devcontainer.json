@@ -1,0 +1,26 @@
+{
+  "name": "Claude Code",
+  "build": { "dockerfile": "Dockerfile" },
+
+  "features": {
+    // Installs the Claude Code CLI (and Node.js if missing)
+    "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+  },
+
+  "remoteUser": "vscode",
+
+  // Claude login lives in a per-project Docker volume, never on your host
+  "mounts": [
+    "source=claude-code-config-${devcontainerId},target=/home/vscode/.claude,type=volume"
+  ],
+  "containerEnv": {
+    "CLAUDE_CONFIG_DIR": "/home/vscode/.claude"
+  },
+
+  "customizations": {
+    "vscode": {
+      // Installed inside the container only
+      "extensions": ["anthropic.claude-code"]
+    }
+  }
+}
